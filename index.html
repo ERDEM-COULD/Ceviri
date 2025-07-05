@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Çeviri Uzantısı Yükleme Rehberi</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; max-width: 600px; margin: auto; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #tutorial { margin-top: 20px; display: none; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+    #stepImage { max-width: 100%; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; }
+    #stepDesc { font-size: 18px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>Çeviri Uzantısı Yükleyici</h1>
+  <p>Uzantıyı hemen indirmek için aşağıdaki butona tıklayın:</p>
+  <button id="downloadBtn">Çeviri Uzantısını İndir</button>
+
+  <div id="tutorial">
+    <img id="stepImage" src="" alt="Adım Görseli" />
+    <div id="stepDesc"></div>
+    <button id="nextBtn">Sonraki</button>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        img: 'step1.png', // Buraya uygun ekran görüntüsü koyacaksın
+        desc: 'İndirilen Çeviri Uzantısı.zip dosyasını açıp masaüstüne çıkarın.'
+      },
+      {
+        img: 'step2.png',
+        desc: 'Tarayıcınızda chrome://extensions/ sayfasını açın.'
+      },
+      {
+        img: 'step3.png',
+        desc: 'Sağ üstteki "Geliştirici modu" seçeneğini aktif hale getirin.'
+      },
+      {
+        img: 'step4.png',
+        desc: '"Paketlenmemiş uzantı yükle" butonuna tıklayın.'
+      },
+      {
+        img: 'step5.png',
+        desc: 'Az önce açtığınız klasörü seçip uzantının yüklendiğini görün.'
+      },
+      {
+        img: '',
+        desc: 'Tebrikler! Uzantınız başarıyla yüklendi.'
+      }
+    ];
+
+    const downloadBtn = document.getElementById('downloadBtn');
+    const tutorial = document.getElementById('tutorial');
+    const stepImage = document.getElementById('stepImage');
+    const stepDesc = document.getElementById('stepDesc');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentStep = 0;
+
+    downloadBtn.addEventListener('click', () => {
+      // Dosya indir (Örnek olarak zip dosya linki verilmeli)
+      const link = document.createElement('a');
+      link.href = 'Çeviri_uzantısı.zip'; // Buraya dosya linki
+      link.download = 'Çeviri_uzantısı.zip';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // İndirme sonrası öğretici başlat
+      downloadBtn.style.display = 'none';
+      tutorial.style.display = 'block';
+      showStep();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentStep++;
+      if (currentStep >= steps.length) {
+        tutorial.style.display = 'none';
+      } else {
+        showStep();
+      }
+    });
+
+    function showStep() {
+      const step = steps[currentStep];
+      stepImage.src = step.img || '';
+      stepImage.style.display = step.img ? 'block' : 'none';
+      stepDesc.textContent = step.desc;
+
+      if (currentStep === steps.length - 1) {
+        nextBtn.textContent = 'Bitir';
+      } else {
+        nextBtn.textContent = 'Sonraki';
+      }
+    }
+  </script>
+
+</body>
+</html>
